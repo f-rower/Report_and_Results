@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction}{5}
+\contentsline {subsection}{\numberline {1.1}Aims and objectives}{5}
+\contentsline {section}{\numberline {2}Experimental set-up and testing}{5}
+\contentsline {subsection}{\numberline {2.1}Materials used}{5}
+\contentsline {subsection}{\numberline {2.2}Dynamic model of drone}{5}
+\contentsline {subsection}{\numberline {2.3}Perching stabilisation/implementation}{5}
+\contentsline {subsection}{\numberline {2.4}Experimental set-up}{5}
+\contentsline {subsection}{\numberline {2.5}Test strategy}{6}
+\contentsline {section}{\numberline {3}Results}{6}
+\contentsline {section}{\numberline {4}Discussion}{6}
+\contentsline {section}{\numberline {5}Conclusions and future work}{6}
+\contentsline {section}{Appendices}{7}
+\contentsline {section}{\numberline {A}Mode shapes and natural frequencies considered}{7}
