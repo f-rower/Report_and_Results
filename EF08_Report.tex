@@ -1,0 +1,117 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[margin= 1 in]{geometry}
+\usepackage{listing}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{natbib}
+\usepackage[toc,page]{appendix}
+%\usepackage[square,comma,numbers,sort&compress]{natbib}
+\usepackage{setspace} \linespread {1}
+\setlength{\parskip}{6pt}
+\usepackage[utf8]{inputenc}
+\graphicspath{ {figures/} }
+\usepackage{array} %To get rid of paragraph indents
+\setlength{\parindent}{0pt}
+\usepackage{times}% Use times new roman font
+%\sectionfont{\fontsize{12}{15}\selectfont}
+\usepackage{sectsty}%Specify font sizes for sections and subsections
+\sectionfont{\fontsize{18}{12}\selectfont}
+\subsectionfont{\fontsize{14}{1}\selectfont}
+\subsubsectionfont{\fontsize{12}{1}\selectfont}
+\usepackage{titlesec}
+\usepackage{lipsum}
+\usepackage{amsmath}
+%\titlespacing{\section}{0pt}{*1}{*1}
+%\titlespacing{\subsection}{0pt}{*2}{*0.1}
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{12pt plus 2pt minus 2pt}%Left spacing, Upper spacing, Lower spacing
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 0pt minus 0pt}
+\titlespacing\subsubsection{0pt}{12pt plus 0pt minus 0pt}{0pt plus 0pt minus 0pt}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{tocloft}
+%\preto\section{%
+ % \ifnum\value{section}=0\addtocontents{toc}{\vskip10pt}\fi
+%}
+\renewcommand{\abstractname}{\Large Summary}
+\renewcommand{\contentsname}{\hfill\bfseries\Large Table of Contents\hfill}   
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\listtablename}{\hfill\bfseries\Large List of Tables}
+\renewcommand{\cftafterlottitle}{\hfill}
+\renewcommand{\listfigurename}{\hfill\bfseries\Large List of Figures\hfill} % no \hfill after "List of Tables"...
+%%% using the command "\renewcommand{\cftlottitlefont}{\hfill\bfseries\Large}" works too...
+\renewcommand{\cftafterlottitle}{\hfill}
+%-------------------------------
+
+\begin{document}
+\setcounter{page}{2}
+
+\tableofcontents
+
+\pagebreak
+
+\listoffigures
+
+\pagebreak
+
+\listoftables
+
+\pagebreak
+%-------------MAIN BODY-----------
+\section{Introduction}
+Esto es una cita \cite{avitabile}.
+\subsection{Motivation}
+p.9 on logbook
+\subsection{Literature review}\label{litrev}
+Research on perching (see pg 7 on logbook); stanford and vishwa robotics. Talk about Hao Wang's dissertation?
+\subsection{Aims and objectives}
+
+\section{Experimental set-up and testing}
+\subsection{Materials used}
+	Crazyflie 2.0, crazyradio, vm, joystick. Explain rough architecture of drone control (python client and firmware). Talk about software used to compile/edit code?
+\subsection{Dynamic model of drone}
+\subsection{Perching stabilisation/implementation}
+Stages of flight (pg 7, 26/6). Show flowchart?
+PID control structure for roll ,pitch, yaw
+Setting the thrust low enough such that drone doesn't fly away
+Attitude vs rate mode
+Explain how I first intended to tune the drone (following the usual procedure of tuning inside loop first, and outside loop later, each dof separately), and how that did not work (show results/pictures in the results section or here?: Results could be a plot of the different behaviours on different surfaces and 1 dof test rig results vs with no test rig) 
+
+
+\subsection{Experimental set-up}
+Models of monopod/perching considered? p.8
+p.13 test rig models considered/built and why they were used/modified/discarded. Comment on why height adjustment was discarded as well.
+
+
+\begin{equation} \label{eq1}
+[M]\{\ddot{x}\}+[C]\{\dot{x}\}+[K]\{x\} = \{f\}
+\end{equation}
+
+\begin{figure}[h!]
+\centering
+ % \includegraphics[scale=0.5]{Fig1.pdf}
+  \caption{Signal processing flowchart}
+  \label{fig1}
+\end{figure}
+Figure \ref{fig1} shows a schematic of the signal processing equipment. As previously \subsection{Test strategy}
+
+\section{Results} \label{results}
+Compare stability with and without base thrust and battery life with and without base thrust (what stick length though? Probably just the best stick length)
+
+\section{Discussion}
+PID loop tuning: Show effects of not having good yaw control (show images of "unexplained" falling), using the initial test rig, and what effect tuning with regular procedures had (tuning in rate mode only and then attitude vs tuning everything at the same time, tuning 1 dof and the others, etc. Show how this gave largely wrong PID parameters only useful for a few surfaces with movement, and not a stationary point). Regular tuning, with 1 dof at a time was justified by the fact that thrust requests were independently added to each motor from each axis. According to this, no yaw control would be necessary to properly tune the drone, but this proved not to be correct.
+
+Talk about stick length and sensitivity to unbalanced mass.
+\section{Conclusions and future work}
+\begin{itemize}
+\item Three fundamental mode shapes can be identified for all the structures that \end{itemize}
+
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\pagebreak
+\begin{appendices}
+\section{Mode shapes and natural frequencies considered}
+
+\end{appendices}
+\end{document}
