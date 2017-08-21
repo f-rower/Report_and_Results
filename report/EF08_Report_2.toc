@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Introduction}{5}
+\contentsline {section}{\numberline {2}Experimental set-up and testing}{6}
+\contentsline {subsection}{\numberline {2.1}Dynamic model of drone}{6}
+\contentsline {subsection}{\numberline {2.2}Control structure and perching implementation}{8}
+\contentsline {subsection}{\numberline {2.3}Experimental set-up}{8}
+\contentsline {section}{\numberline {3}Results and discussion}{8}
+\contentsline {section}{\numberline {4}Conclusions and future work}{10}
+\contentsline {section}{Appendices}{11}
+\contentsline {section}{\numberline {A}Mode shapes and natural frequencies considered}{11}

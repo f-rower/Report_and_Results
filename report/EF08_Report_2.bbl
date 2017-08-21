@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{PerchTypes}
+Harsha Prahlad.
+\newblock Electroadhesive robots—wall climbing robots enabled by a novel,
+  robust, and electrically controllable adhesion technology.
+\newblock {\em IEEE}, 2008.
+
+\bibitem{SCAMP}
+Morgan~T. Pope.
+\newblock A multimodal robot for perching and climbing on vertical outdoor
+  surfaces.
+\newblock {\em IEEE}, 2016.
+
+\bibitem{microspines}
+Alexis Lussier~Desbiens and Mark~R. Cutkosky.
+\newblock Landing and perching on vertical surfaces with microspines for small
+  unmanned air vehicles.
+\newblock {\em Journal of Intelligent and Robotic Systems}, 57(1), 2009.
+
+\bibitem{robobee}
+M.~A. Graule, P.~Chirarattananon, S.~B. Fuller, N.~T. Jafferis, K.~Y. Ma,
+  M.~Spenko, R.~Kornbluh, and R.~J. Wood.
+\newblock Perching and takeoff of a robotic insect on overhangs using
+  switchable electrostatic adhesion.
+\newblock {\em Science}, 352(6288):978--982, 2016.
+
+\bibitem{bird}
+C.~E. Doyle, J.~J. Bird, T.~A. Isom, J.~C. Kallman, D.~F. Bareiss, D.~J.
+  Dunlop, R.~J. King, J.~J. Abbott, and M.~A. Minor.
+\newblock An avian-inspired passive mechanism for quadrotor perching.
+\newblock {\em IEEE/ASME Transactions on Mechatronics}, 18(2):506--517, April
+  2013.
+
+\bibitem{insect}
+Akihiko Fukushima and Yoichiro Kawaguchi.
+\newblock Insect leg inspired friction attachment for miniature quadcopter.
+\newblock In {\em Proceedings of the 12th International Conference on Advances
+  in Computer Entertainment Technology}, ACE '15, pages 34:1--34:4, New York,
+  NY, USA, 2015. ACM.
+
+\bibitem{Hao}
+Hao Wang.
+\newblock Monopod perching quadrotor.
+\newblock {\em University of Bristol and University of the West of England},
+  2016.
+
+\end{thebibliography}
