@@ -4,3 +4,6 @@
 \contentsline {figure}{\numberline {4}{\ignorespaces Cascaded PID controller on nano quadcopter}}{8}
 \contentsline {figure}{\numberline {5}{\ignorespaces (a) Monopod assembly. (b) Detail of sharpened monopod tip}}{9}
 \contentsline {figure}{\numberline {6}{\ignorespaces (a) Initial test rig. (b) Improved test rig}}{10}
+\contentsline {figure}{\numberline {7}{\ignorespaces Roll, pitch and yaw angles on: (a) 1 DOF test on rig, (b) slippery surface, (c) test on low friction surface with restricted movement on surface plane}}{10}
+\contentsline {figure}{\numberline {8}{\ignorespaces (a) Motor speed plot, (b) Free fall comparison on 1 DOF test rig and no test rig for damping assessment}}{10}
+\contentsline {figure}{\numberline {9}{\ignorespaces (a) Sudden unsettling of quadcopter, \leavevmode {\color {red}(b) Detail of yaw angle at the point of unsettling }}}{11}

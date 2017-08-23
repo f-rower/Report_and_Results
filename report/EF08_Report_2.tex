@@ -1,10 +1,10 @@
 \documentclass[12pt,a4paper]{article}
-\usepackage{color}
-\usepackage[margin= 1 in]{geometry}
-\usepackage{listing}
-\usepackage{graphicx}
+\usepackage{color}%for coloured font
+\usepackage[margin= 1 in]{geometry}%page margins
+\usepackage{listing}%For item lists
+\usepackage{graphicx}%To include graphics
 %\usepackage{svg}
-\usepackage{natbib}
+\usepackage{natbib}%bibliography
 \usepackage[toc,page]{appendix}
 \usepackage{setspace} \linespread {1}
 \setlength{\parskip}{6pt}
@@ -12,7 +12,7 @@
 \setlength{\parindent}{0pt}
 \usepackage{times}% Use times new roman font
 \usepackage{amsmath}
-\usepackage{booktabs}
+\usepackage{booktabs}%for tables
 %-------------------------------
 
 \begin{document}
@@ -110,18 +110,18 @@ and rearranging, the maximum tilt angle $\theta_{max}$ can be found:
 \theta_{max} = sin^{-1}\Big(\frac{T_1l}{2mgL + MgL}\Big)
 \end{equation}
 
-The parameters $T_{1}, l, m$ and $M$ were experimentally determined, and were recorded in \textcolor{red}{table \ref{table}}. Figure \ref{fig3} shows $\theta_{max}$ as a function of monopod length $L$.
+The parameters $T_{1}, l, m$ and $M$ were experimentally determined, and were recorded in \textcolor{red}{table \ref{table1}}. Figure \ref{fig3} shows $\theta_{max}$ as a function of monopod length $L$.
 
 
 \begin{table}[h!]
 \centering
-\label{table}
 \begin{tabular}{@{}ccccc@{}}
 \toprule
 T$_{1}$ {[}N{]} & l {[}m{]} & M {[}kg{]} & m {[}kg{]} & g {[}ms$^{-2}${]} \\ \midrule
 0.05625         & 0.035     & 0.032      & 0.004      & 9.8               \\ \bottomrule
 \end{tabular}
 \caption{Experimentally determined parameters}
+\label{table1}
 \end{table}
 
 \begin{figure}[h!]
@@ -191,9 +191,49 @@ One of the most challenging aspects of this project involved determining suitabl
 
 As previously explained, a 1 DOF test rig was initially employed to adjust roll, pitch and yaw PIDs. The following procedure was performed for each axis: Tune rate PID until quadcopter stayed in position and then tune attitude PID to maintain a desired angle. 
 
-This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters are compiled in table \ref{table1}. 
+This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters for a 8 cm monopod are compiled in \textcolor{red}{table \ref{table2}}. 
 
-A strange behaviour was observed when the quadcopter was located on various surfaces to assess the efficacy and robustness of perching: On slippery surfaces or surfaces with significant damping, such as human skin, the quadcopter would remain consistently upright. On slippery surfaces, it would drift along the surface plane while remaining balanced. However, when the drone was located on surfaces with very low friction and where it was not possible to drift, it would instantly fall (Show picture of slot in aluminium plate?). Hypotheses...
+A strange behaviour was observed when the quadcopter was located on various surfaces to assess the efficacy and robustness of perching: On surfaces with significant damping, such as human skin, the quadcopter would remain consistently upright. On slippery surfaces, it would drift along the surface plane while remaining balanced. However, when the drone was located on surfaces with very low friction and where it was not possible to drift, it would instantly fall \textcolor{red}{(Show picture of slot in aluminium plate?)}. This phenomenon was initially believed to be due to a slightly incorrect location of the CoG. However, this hypothesis was later disproved by performing balancing experiments on the 1 DOF test rig, and noting that the quadcopter fell with a different orientation each time. Figure \ref{fig7} illustrates the behaviour under three different scenarios: 1 DOF test on test rig, test on slippery surface and test on low friction surface with restricted movement on surface plane.
+
+
+\begin{figure}[h!]
+\centering
+ %\includegraphics[scale=0.4]{Quad_PID.pdf}
+  \caption{Roll, pitch and yaw angles on: (a) 1 DOF test on rig, (b) slippery surface, (c) test on low friction surface with restricted movement on surface plane}
+  \label{fig7}
+\end{figure}
+
+A second hypothesis was devised, attributing this instability to the unusually high gains found, and, more crucially, the tuning method and test rig used. It was observed that the motors span either at zero or full speed, even for inclinations as small as 0.01$^{\circ}$ (Figure \ref{fig8}(a)). This, and the fast and violent vibrations about 0$^{\circ}$, suggested that the PID gains found were far from optimal. An assessment on the damping of the 1 DOF test rig was performed by letting it freely fall with no thrust input, and this was compared to a free fall without test rig (Figure \ref{fig8}(b)). The results obtained suggested that the 1 DOF test rig was significantly modifying the dynamics of the system, and a second test rig was designed to overcome these limitations (Figure \ref{fig6}(b))
+
+
+\begin{figure}[h!]
+\centering
+ %\includegraphics[scale=0.4]{Quad_PID.pdf}
+  \caption{(a) Motor speed plot, (b) Free fall comparison on 1 DOF test rig and no test rig for damping assessment}
+  \label{fig8}
+\end{figure}
+
+The most obvious limitation of this new test rig was that 1 DOF PID adjustment was not possible. However, since the controllers for each axis are decoupled, the symmetry of the quadcopter allowed for both roll and pitch control loops to be tuned simultaneously using the same parameters for both axes. The yaw controller also had to be enabled to avoid uncontrolled spinning of the quadcopter, which would eventually unsettle it and fall. A desirable tuning goal was to balance the quadcopter using mainly proportional gains to avoid integrator build-up in cases of sustained disturbances, which would cause the drone to remain unstable for a certain time until this term decreased sufficiently. This was the case with the old gains, and many times the controllers would have to be fully reset after a fall due to the very large integral gain that had accumulated.
+
+After extensive trials, it was found that balancing the quadcopter on rate mode was not possible: The K$_p$ and K$_i$ terms were so large that motor saturation would cause them to simply turn either at zero or full speed, as was previously the case, but still fall. 
+
+A different approach was used and the attitude PID gains were given a value of 1 each to aid in balancing. This allowed for much lower PID parameters to be determined, with an order of 10$^3$ for roll and pitch, subsequently resulting battery consumption. Final PID gains for a 8 cm monopod are compiled in table \ref{table2}. 
+
+\begin{itemize}
+\item table with PID parameters here
+\end{itemize}
+
+While performing preliminary endurance tests to assess how long perching could be sustained for on a single charge, another strange phenomenon was observed: On some occasions, the drone would suddenly become highly unstable and fall, with no influence from external disturbances or presence of imbalances in the drone. Figure \ref{fig9}(a) illustrates this behaviour: preceding the instability, no external disturbances have affected the quadcopter, yet the pitch and roll angles grow unbounded. This was initially attributed to sudden connectivity losses between the on-board controller and the pc client. However, subsequent tests verified that this was not the cause of falling. Further balance and external disturbance verifications were performed, but once again were found not to be the causes.
+
+The cause of falling was finally attributed to the yaw controller: Yaw control was thought to be only necessary to avoid uncontrolled spinning, so a very rough adjustment, with oscillations of $\pm$20$^{\circ}$ was initially performed to focus attention on data gathering mainly related to pitch and roll. The unsettling was believed to happen when all pitch, roll and yaw were at their maximum amplitudes at the same time: The yaw controller would exert a fast turning moment, causing the quadcopter to quickly rotate about its monopod axis, changing roll and pitch angles a the same time. These fast changes would not allow the motors to respond fast enough to these changes due to their own inertia, eventually causing the drone to fall. The yaw PID was then readjusted, and an oscillation of $\pm$0.5$^{\circ}$ was found to be small enough to eliminate this phenomenon.
+
+
+\begin{figure}[h!]
+\centering
+ %\includegraphics[scale=0.4]{Quad_PID.pdf}
+  \caption{(a) Sudden unsettling of quadcopter, \textcolor{red}{(b) Detail of yaw angle at the point of unsettling }}
+  \label{fig9}
+\end{figure}
 
 
 
@@ -219,13 +259,13 @@ A strange behaviour was observed when the quadcopter was located on various surf
 \item Talk about PID parameters used during flight with and without perching rig?(They are the same. But maybe putting a bit more K$_I$ helps it from drifting around)
 \item Limitations of using such a tiny drone
 \item repeatability of tests/trials
+\item change in PID parameters with stick length
 \end{itemize}
 \end{itemize}
 Setting the thrust low enough such that drone doesn't fly away
 Attitude vs rate mode
 Explain how I first intended to tune the drone - DO THIS VERY BRIEFLY TO EXPLAIN MORE EXTENSIVELY ON THE DISCUSSION (following the usual procedure of tuning inside loop first, and outside loop later, each dof separately), and how that did not work (show results/pictures in the results section or here?: Results could be a plot of the different behaviours on different surfaces and 1 dof test rig results vs with no test rig) 
-Compare stability with and without base thrust and battery life with and without base thrust (what stick length though? Probably just the best stick length)
-Show all discussed with 
+
 
 PID loop tuning: Show effects of not having good yaw control (show images of "unexplained" falling), using the initial test rig, and what effect tuning with regular procedures had (tuning in rate mode only and then attitude vs tuning everything at the same time, tuning 1 dof and the others, etc. Show how this gave largely wrong PID parameters only useful for a few surfaces with movement, and not a stationary point). Regular tuning, with 1 dof at a time was justified by the fact that thrust requests were independently added to each motor from each axis. According to this, no yaw control would be necessary to properly tune the drone, but this proved not to be correct.
 
