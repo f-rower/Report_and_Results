@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 \contentsline {figure}{\numberline {1}{\ignorespaces Monopod perching drone \leavevmode {\color {red}label the picture}}}{6}
 \contentsline {figure}{\numberline {2}{\ignorespaces Dynamic model of perching drone. $T_1,T_2$ and $m$ represent thrust and mass from each pair of motors respectively, $L$ is length of the monopod, $M$ mass of the quadcopter, $l$ motor arm length and $\theta $ inclination angle}}{7}
 \contentsline {figure}{\numberline {3}{\ignorespaces Maximum tilt angle $\theta _{max}$ as a function of monopod length}}{8}
 \contentsline {figure}{\numberline {4}{\ignorespaces Cascaded PID controller on nano quadcopter}}{8}
 \contentsline {figure}{\numberline {5}{\ignorespaces (a) Monopod assembly. (b) Detail of sharpened monopod tip}}{9}
 \contentsline {figure}{\numberline {6}{\ignorespaces (a) Initial test rig. (b) Improved test rig}}{10}
-=======
-\contentsline {figure}{\numberline {1}{\ignorespaces Monopod perching drone \leavevmode {\color {red}label the picture}}}{6}
-\contentsline {figure}{\numberline {2}{\ignorespaces Dynamic model of perching drone. $T_1,T_2$ and $m$ represent thrust and mass from each pair of motors respectively, $L$ is length of the monopod, $M$ mass of the quadcopter, $l$ motor arm length and $\theta $ inclination angle}}{7}
-\contentsline {figure}{\numberline {3}{\ignorespaces Maximum tilt angle $\theta _{max}$ as a function of monopod length}}{8}
->>>>>>> 231f91b717cee464a47ce4418ca65c378862b584

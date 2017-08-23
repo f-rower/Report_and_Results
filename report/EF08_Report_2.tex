@@ -68,13 +68,9 @@ A recent study investigated the feasibility of a novel technique termed "monopod
 -Describe what this paper is concerned with achieving
 
 
-<<<<<<< HEAD
 The aim of this paper is focused on the implementation of this technology on a Crazyflie 2.0 nano quadcopter, studying its feasibility and characterising its behaviour as a function of \textcolor{red}{monopod} length. The performance metrics will involve measurement of perching and hovering time, disturbance rejection and assessment of stability on various surfaces and geometries. The results obtained in this project will shed light on the capabilities and scalability of this approach, allow for the creation of PID tuning guidelines and aid identification of possible limitations. \textcolor{red}{MAYBE PUT STAGES OF FLIGHT HERE?}
 
 
-=======
-The aim of this paper is focused on the implementation of this technology on a Crazyflie 2.0 nano quadcopter, studying its feasibility and characterising its behaviour as a function of \textcolor{red}{monopod} length. The performance metrics will involve measurement of perching and hovering time, disturbance rejection and assessment of stability on various surfaces and geometries. The results obtained in this project will shed light on the scalability of this approach and allow for the creation of PID tuning guidelines and exploration of possible limitations.
->>>>>>> 231f91b717cee464a47ce4418ca65c378862b584
 
 
 \section{Experimental set-up and testing}
@@ -138,7 +134,6 @@ T$_{1}$ {[}N{]} & l {[}m{]} & M {[}kg{]} & m {[}kg{]} & g {[}ms$^{-2}${]} \\ \mi
 In an effort to maintain the system sufficiently resilient to external disturbances, a maximum tilt angle of at least 2 degrees was decided upon. In order to maintain the infinitely stiff and massless monopod assumptions relevant, a maximum monopod length was assigned such that its weight would account for $<$5\% of the weight of the drone, and would not deflect more than 5 mm under cantilever loading with a mass equal to the weight of the drone. This set the maximum monopod length at $\approx$0.2 m. Monopod lengths of 1,2,3,4,6,8,10,12,14,16,18 and 20 cm were subsequently tested.
 
 \subsection{Control structure and perching implementation}
-<<<<<<< HEAD
 The Crazyflie 2.0 nano quadcopter implements a cascaded PID control with Kalman filtering to respond to setpoints requested by the user. This consists of an outer loop running at low frequency which calculates the error between the desired and measured angle and outputs a desired angular rate to the inner loop. This inner loop is updated at a higher frequency and calculates the motor voltage required to induce a certain turning moment on the quadcopter, which translates into an angular rate which is compared against the desired angular rate. Figure \ref{fig4} illustrates the cascaded PID loop implementation.
 
 
@@ -165,25 +160,12 @@ The PID tuning approach will involve adjusting each axis separately. A typical a
 \item Explain how cascaded PID is implemented in this drone(one PID for each axis). \textcolor{red}{what PID am I adjusting the parameters for? I need this info for the matlab model}. Explain that the idea is to get this PID controller to control the tilt of the drone, considering the tilt angles are small enough to linearise the problem.
 \item Talk about the flight stages and which one we are mostly interested in on this paper (perching) Maybe leave this for the end
 \end{itemize}
-=======
-\begin{itemize}
-
-\item Explain how cascaded PID is implemented in this drone(one PID for each axis). \textcolor{red}{what PID am I adjusting the parameters for? I need this info for the matlab model}. Explain that the idea is to get this PID controller to control the tilt of the drone, considering the tilt angles are small enough to linearise the problem.
-\item Talk about the flight stages and which one we are mostly interested in on this paper (perching)
-\end{itemize}
-
-Stages of flight (pg 7, 26/6). Show flowchart?
-PID control structure for roll ,pitch, yaw
-
-
->>>>>>> 231f91b717cee464a47ce4418ca65c378862b584
 
 \subsection{Experimental set-up}
 \begin{itemize}
 \item Models of monopod/perching considered. p.8
 \item p.13 test rig models considered/built and why they were used/modified/discarded.
 \end{itemize}
-<<<<<<< HEAD
 A carbon fibre monopod was used to minimise weight impact while ensuring sufficient stiffness. A 3D-printed ABS plastic support was used to couple it to the quadcopter (Figure \ref{fig5}(a)). The tip of the monopod was sharpened to ensure single-point perching (Figure \ref{fig5}(b)). Care was taken to place the monopod underneath the center of gravity (CoG) of the quadcopter to minimise any imbalances. Any imbalances were corrected by shifting the position of the battery.
 
 \begin{figure}[h!]
@@ -202,10 +184,20 @@ A 1 DOF test rig was designed and built to adjust the three PID controllers (Fig
   \caption{(a) Initial test rig. (b) Improved test rig}
   \label{fig6}
 \end{figure}
-=======
->>>>>>> 231f91b717cee464a47ce4418ca65c378862b584
 
 \section{Results and discussion} \label{Results and discussion}
+\subsection{PID controller tuning}
+One of the most challenging aspects of this project involved determining suitable PID parameters for each monopod length: The very low mass and therefore inertia of the quadcopter made it very sensitive to small changes in CoG positioning and damping, greatly affecting the repeatability of results.
+
+As previously explained, a 1 DOF test rig was initially employed to adjust roll, pitch and yaw PIDs. The following procedure was performed for each axis: Tune rate PID until quadcopter stayed in position and then tune attitude PID to maintain a desired angle. 
+
+This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters are compiled in table \ref{table1}. 
+
+A strange behaviour was observed when the quadcopter was located on various surfaces to assess the efficacy and robustness of perching: On slippery surfaces or surfaces with significant damping, such as human skin, the quadcopter would remain consistently upright. On slippery surfaces, it would drift along the surface plane while remaining balanced. However, when the drone was located on surfaces with very low friction and where it was not possible to drift, it would instantly fall (Show picture of slot in aluminium plate?). Hypotheses...
+
+
+
+\subsection{Characterisation and analysis of perching quadcopter}
 \begin{itemize}
 \item PID parameter tuning: Anything to do with getting the thing to perch. Talk about everything to do with parameter tuning:
 \begin{itemize}
@@ -248,10 +240,7 @@ Good to add some sort of friction/damping mechanism to the end of the monopod su
 
 \item effect of yaw
 \item effect of test rig
-<<<<<<< HEAD
 \item talk about inspiration from omnicube?
-=======
->>>>>>> 231f91b717cee464a47ce4418ca65c378862b584
 \item   \end{itemize}
 
 
