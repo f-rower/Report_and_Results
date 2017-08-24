@@ -74,7 +74,7 @@ The aim of this paper is focused on the implementation of this technology on a C
 
 
 \section{Experimental set-up and testing}
-The Crazyflie 2.0 nano quadcopter was used as the test platform for this project. Its small size and high modularity made it an attractive choice, as well as its open-source code, which allows for extensive modifications to suit each application. A Crazyradio PA was used to communicate with the quadcopter, and development was performed in a Bitcraze virtual machine, built specifically for development of this quadcopter and freely available online.
+The Crazyflie 2.0 nano quadcopter was used as the test platform for this project. Its small size and high modularity made it an attractive choice, as well as its open-source code, which allows for extensive modifications to suit each application. A Crazyradio PA was used to communicate with the quadcopter, and development was performed in a Bitcraze virtual machine, built specifically for development of this quadcopter and freely available online. This drone has a flight time of only 7 minutes while hovering, which poses a serious limitation to its practicality in mission-based or research-based scenarios.
 	
 \subsection{Dynamic model of drone}
 -Show my dynamic model of the drone + equations. Show also expected max roll/pitch angles? Describe here the stick lengths that will be used as well.
@@ -238,11 +238,19 @@ The cause of falling was finally attributed to the yaw controller: Yaw control w
 
 
 \subsection{Characterisation and analysis of perching quadcopter}
+Once the correct PID parameters were found for each monopod length, a study of the properties and behaviour for each length was performed. To aid in future scalability studies with larger or smaller quadcopters, the dimensionless variable $L/l$ (ratio of monopod to motor arm length. In this paper this will be referred as the \textcolor{red}{moment arm ratio}) was used instead of monopod length.
+
+One of the most important matters in perching involves measuring how much longer mission time can be prolonged: A series of tests were performed to measure perching time for each monopod length (Figure \ref{fig10}(a)). The hover time for the non-instrumented Crazyflie 2.0 quadcopter was measured at 6 minutes 45 seconds (405 seconds). The experimental results indicate perching times between 40 minutes (2400 seconds) and 63 minutes (3780 seconds), which constitutes a significant 500\% and 800\% increase in operation time with respect to simple hovering. The longest average perching times were obtained for moment arm ratios of 0.57 and 0.85, both yielding 63 minutes. By fitting a trendline around the measured datapoints, it could be inferred that the optimal moment arm ratio would lie between these two values. If lower ratios are used, a steep decrease in performance can be observed. This could be due to the high turbulence induced by "ground effect", causing a more frequent unsettling of the quadcopter due to recirculation of air underneath the rotors, inducing a larger power draw. 
+
+A much gentler loss is observed for larger ratios, which seem to approach an asymptote at about 40 minutes. This could in part be attributed to a decrease in ground effect, but a definitive answer cannot be provided, given the difficulty of experimentally determining the extent of the impact that ground effect might have on the structure. Another hypothesis relates to the magnitude of the $\theta_{max}$ angle and its rate of change per unit length of monopod for long monopods (Figure \ref{fig3}): The very small value of $\theta_{max}$ indicates that further changes in monopod length will almost imperceptibly affect both the inclination of the drone and its horizontal displacement from the pivot point, therefore having a minimal impact on battery consumption. This rationale is based on the assumption that the monopod can still be considered massless: All of the monopods used weighted well below 1 gram (3\% of the weight of the drone), so was considered a suitable assumption.
+
+As expected, instrumenting a quadcopter will negatively impact hover times. Hover times were recorded for all monopod lengths (Figure \ref{fig10}(a)), and the clearest trend observed was that as monopod length increases, hovering time decreases. For the shortest moment arm ratio, a reduction in flight time of 30 seconds (7.4\%) can be observed, while for a moment arm ratio of 3.4 the loss increases to 68 seconds (16.7\%).Talk about the two slopes, about hovering close to ground, and the pareto chart, and how despite the loss in flight time, the percentage gain in operation time is much larger than the loss in flight time.
+
 
 \begin{figure}[h!]
 \centering
  \includegraphics[scale=0.23]{Perch_Time.pdf}
-  \caption{(a) Perch time and hover time as a function of $L/l$, (b) Pareto chart with total operation time as a function of $L/l$ }
+  \caption{(a) Perch time and hover time as a function of $L/l$ (average of 5 trials), (b) Total operation time as a function of $L/l$ }
   \label{fig10}
 \end{figure}
 

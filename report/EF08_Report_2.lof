@@ -7,7 +7,7 @@
 \contentsline {figure}{\numberline {7}{\ignorespaces Roll, pitch and yaw angles on: (a) 1 DOF test on rig, (b) slippery surface, (c) test on low friction surface with restricted movement on surface plane}}{10}
 \contentsline {figure}{\numberline {8}{\ignorespaces (a) Motor speed plot, (b) Free fall comparison on 1 DOF test rig and no test rig for damping assessment}}{10}
 \contentsline {figure}{\numberline {9}{\ignorespaces (a) Sudden unsettling of quadcopter, \leavevmode {\color {red}(b) Detail of yaw angle at the point of unsettling }}}{11}
-\contentsline {figure}{\numberline {10}{\ignorespaces (a) Perch time and hover time as a function of $L/l$, (b) Pareto chart with total operation time as a function of $L/l$ }}{12}
-\contentsline {figure}{\numberline {11}{\ignorespaces Measured and calculated maximum tilt angles as a function of $L/l$}}{12}
-\contentsline {figure}{\numberline {12}{\ignorespaces Maximum yaw rate as a function of $L/l$}}{13}
-\contentsline {figure}{\numberline {13}{\ignorespaces (a) Proportional gains of rate controller and \leavevmode {\color {red}(b) attitude proportional gains} as a function of $L/l$}}{13}
+\contentsline {figure}{\numberline {10}{\ignorespaces (a) Perch time and hover time as a function of $L/l$ (average of 5 trials), (b) Total operation time as a function of $L/l$ }}{13}
+\contentsline {figure}{\numberline {11}{\ignorespaces Measured and calculated maximum tilt angles as a function of $L/l$}}{13}
+\contentsline {figure}{\numberline {12}{\ignorespaces Maximum yaw rate as a function of $L/l$}}{14}
+\contentsline {figure}{\numberline {13}{\ignorespaces (a) Proportional gains of rate controller and \leavevmode {\color {red}(b) attitude proportional gains} as a function of $L/l$}}{14}
