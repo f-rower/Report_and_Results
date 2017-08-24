@@ -189,7 +189,7 @@ A 1 DOF test rig was designed and built to adjust the three PID controllers (Fig
 \subsection{PID controller tuning}
 One of the most challenging aspects of this project involved determining suitable PID parameters for each monopod length: The very low mass and therefore inertia of the quadcopter made it very sensitive to small changes in CoG positioning and damping, greatly affecting the repeatability of results.
 
-As previously explained, a 1 DOF test rig was initially employed to adjust roll, pitch and yaw PIDs. The following procedure was performed for each axis: Tune rate PID until quadcopter stayed in position and then tune attitude PID to maintain a desired angle. 
+As previously explained, a 1 DOF test rig was initially employed to adjust roll, pitch and yaw PIDs. The following procedure was performed for each axis: Tune rate PID until quadcopter stayed in position and then tune attitude PID to maintain a desired angle. The base thrust component was kept at zero value, since the weight of the drone is already held by the monopod and the base thrust does not contribute to stabilisation.
 
 This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters for a 8 cm monopod are compiled in \textcolor{red}{table \ref{table2}}. 
 
@@ -238,6 +238,37 @@ The cause of falling was finally attributed to the yaw controller: Yaw control w
 
 
 \subsection{Characterisation and analysis of perching quadcopter}
+
+\begin{figure}[h!]
+\centering
+ \includegraphics[scale=0.23]{Perch_Time.pdf}
+  \caption{(a) Perch time and hover time as a function of $L/l$, (b) Pareto chart with total operation time as a function of $L/l$ }
+  \label{fig10}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+ \includegraphics[scale=0.3]{TiltAngle_2.pdf}
+  \caption{Measured and calculated maximum tilt angles as a function of $L/l$}
+  \label{fig11}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+ \includegraphics[scale=0.3]{Yawrate.pdf}
+  \caption{Maximum yaw rate as a function of $L/l$}
+  \label{fig12}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+ \includegraphics[scale=0.3]{Rate_PID.pdf}
+  \caption{(a) Proportional gains of rate controller and \textcolor{red}{(b) attitude proportional gains} as a function of $L/l$}
+  \label{fig13}
+\end{figure}
+
+
+
 \begin{itemize}
 \item PID parameter tuning: Anything to do with getting the thing to perch. Talk about everything to do with parameter tuning:
 \begin{itemize}
@@ -245,7 +276,7 @@ The cause of falling was finally attributed to the yaw controller: Yaw control w
 \item Old vs new PID parameters (some comments on p.55 on use of k$_i$)
 \item problems with first tuning rate PID and then angle PID. Say that giving attitude pid a little bit of gain made tuning a lot easier. Also say that with first test rig, cf would stay up during 1 dof tests, but would fall when released into the actual test.
 \item Influence of yaw control and why it makes the drone so unstable when it is not correctly tuned. Show pictures of the graphs when it was not correct, and how this differs from the general conception that yaw does not affect roll or pitch. Say also that I had a suspicion with the initial test rig as well, because the roll and pitch balanced on 1 dof tests (p.29), but not when combined without yaw control. Comment that I thought it could be due to loss of info packets.
-\item Issues with balancing, monopod support conditions, surface used for tuning (bearings vs slot vs completely flat surface). Talk about how it was very difficult to determine whether the drone was out of balance or that the PID parameters were wrong(kp too high or too low, p.69): Illustrate this with my pictures of changing the orientation of support/using a nominally identical support and the differences in behaviour. Talk about how this balancing issue was dealt with (mass shifting, p.70)
+\item Issues with balancing, monopod support conditions, surface used for tuning (bearings vs slot vs completely flat surface). \textcolor{red}{Talk about how it was very difficult to determine whether the drone was out of balance or that the PID parameters were wrong(kp too high or too low, p.69): Illustrate this with my pictures of changing the orientation of support/using a nominally identical support and the differences in behaviour. Talk about how this balancing issue was dealt with (mass shifting, p.70)}
 \item talk about tip of monopod: sharp vs blunt?
 
 \end{itemize} 
