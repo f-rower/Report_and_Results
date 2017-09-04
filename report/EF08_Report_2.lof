@@ -1,13 +1,17 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces Monopod perching drone \leavevmode {\color {red}label the picture}}}{6}
-\contentsline {figure}{\numberline {2}{\ignorespaces Dynamic model of perching drone. $T_1,T_2$ and $m$ represent thrust and mass from each pair of motors respectively, $L$ is length of the monopod, $M$ mass of the quadcopter, $l$ motor arm length and $\theta $ inclination angle}}{7}
-\contentsline {figure}{\numberline {3}{\ignorespaces Maximum tilt angle $\theta _{max}$ as a function of monopod length}}{8}
-\contentsline {figure}{\numberline {4}{\ignorespaces Cascaded PID controller on nano quadcopter}}{8}
-\contentsline {figure}{\numberline {5}{\ignorespaces (a) Monopod assembly. (b) Detail of sharpened monopod tip}}{9}
-\contentsline {figure}{\numberline {6}{\ignorespaces (a) Initial test rig. (b) Improved test rig}}{10}
-\contentsline {figure}{\numberline {7}{\ignorespaces Roll, pitch and yaw angles on: (a) 1 DOF test on rig, (b) slippery surface, (c) test on low friction surface with restricted movement on surface plane}}{10}
-\contentsline {figure}{\numberline {8}{\ignorespaces (a) Motor speed plot, (b) Free fall comparison on 1 DOF test rig and no test rig for damping assessment}}{10}
-\contentsline {figure}{\numberline {9}{\ignorespaces (a) Sudden unsettling of quadcopter, \leavevmode {\color {red}(b) Detail of yaw angle at the point of unsettling }}}{11}
-\contentsline {figure}{\numberline {10}{\ignorespaces (a) Perch time and hover time as a function of $L/l$ (average of 5 trials), (b) Total operation time as a function of $L/l$ }}{13}
-\contentsline {figure}{\numberline {11}{\ignorespaces Measured and calculated maximum tilt angles as a function of $L/l$}}{13}
-\contentsline {figure}{\numberline {12}{\ignorespaces Maximum yaw rate as a function of $L/l$}}{14}
-\contentsline {figure}{\numberline {13}{\ignorespaces (a) Proportional gains of rate controller and \leavevmode {\color {red}(b) attitude proportional gains} as a function of $L/l$}}{14}
+\contentsline {figure}{\numberline {1}{\ignorespaces Monopod perching drone}}{2}
+\contentsline {figure}{\numberline {2}{\ignorespaces Dynamic model of perching drone. $T_1,T_2$ and $m$ represent thrust and mass from each pair of motors respectively, $L$ is length of the monopod, $M$ mass of the quadcopter, $l$ motor arm length and $\theta $ inclination angle}}{3}
+\contentsline {figure}{\numberline {3}{\ignorespaces Maximum tilt angle $\theta _{max}$ as a function of monopod length}}{4}
+\contentsline {figure}{\numberline {4}{\ignorespaces Cascaded PID controller on nano quadcopter}}{4}
+\contentsline {figure}{\numberline {5}{\ignorespaces (a) Monopod assembly. (b) Detail of sharpened monopod tip}}{5}
+\contentsline {figure}{\numberline {6}{\ignorespaces (a) Initial test rig. (b) Improved test rig}}{6}
+\contentsline {figure}{\numberline {7}{\ignorespaces Roll, pitch and yaw angles on: (a) 1 DOF test on rig, (b) slippery surfaced}}{7}
+\contentsline {figure}{\numberline {8}{\ignorespaces Roll, pitch and yaw angles on low friction surface with restricted movement on surface plane}}{8}
+\contentsline {figure}{\numberline {9}{\ignorespaces (a) Motor speed plot, (b) Free fall comparison on 1 DOF test rig and no test rig for damping assessment}}{8}
+\contentsline {figure}{\numberline {10}{\ignorespaces Sudden unsettling of quadcopter}}{9}
+\contentsline {figure}{\numberline {11}{\ignorespaces (a) Perch time and hover time as a function of $L/l$ (5 trial average), (b) Total operation time as a function of $L/l$ }}{10}
+\contentsline {figure}{\numberline {12}{\ignorespaces Angle measurement test rig}}{11}
+\contentsline {figure}{\numberline {13}{\ignorespaces Measured and calculated maximum tilt angles as a function of $L/\ell $}}{12}
+\contentsline {figure}{\numberline {14}{\ignorespaces Maximum yaw rate as a function of $L/\ell $}}{12}
+\contentsline {figure}{\numberline {15}{\ignorespaces (a) Proportional gains of rate controller as a function of $L/\ell $}}{13}
+\contentsline {figure}{\numberline {16}{\ignorespaces (a) Proportional gains of attitude controller as a function of $L/\ell $}}{13}
+\contentsline {figure}{\numberline {17}{\ignorespaces Parameter tab in CFClient}}{17}

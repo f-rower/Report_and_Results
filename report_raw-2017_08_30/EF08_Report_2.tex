@@ -14,7 +14,6 @@
 \usepackage{times}% Use times new roman font
 \usepackage{amsmath}
 \usepackage{booktabs}%for tables
-\renewcommand{\abstractname}{\Large Abstract}
 %-------------------------------
 
 \begin{document}
@@ -22,21 +21,11 @@
 \begin{titlepage}
 	\begin{center}
 	\Huge{\textbf{Implementing monopod perching on a nano quadcopter}}
-	\linebreak
-	\linebreak	
-	\Large{Francisco Gómez Medina}
 	\end{center}
 \end{titlepage}
 
 
-\begin{abstract}
 
-\begin{center}
-bla
-\end{center}
-
-\end{abstract}
-\pagebreak
 
 \tableofcontents
 
@@ -54,11 +43,21 @@ bla
 \pagenumbering{arabic}
 \setcounter{page}{1}
 \section{Introduction}
-Small-sized drones ,UAVs (Unmanned Aerial Vehicles) and UASs (Unmanned Aerial Systems) currently face two major challenges which affect their applicability and practicality: Battery life and choice of landing surface. Battery life poses a considerable limitation in terms of flight time, inevitably setting a limit to the amount of data gathered during each flight operation, with flight times rarely exceeding 20-30 minutes. As in helicopters, these vehicles also require flat, stable and sufficiently wide surfaces for landing, and in many cases this can become an issue in applications such as rainforest canopy research or natural disaster zone reconnaissance operations.
+Small-sized VTOL drones, UAVs (Unmanned Aerial Vehicles) and UASs (Unmanned Aerial Systems) are currently one of the most sought after technologies in research and enterprises due to their small size and low power requirements. These systems provide the flexibility and manoeuvrability of a conventional helicopter whilst maintaining a fraction of its form factor. These characteristics have made drones an attractive tool for exploration or reconnaissance operations in highly dangerous, complex or inaccessible environments, but have also allowed for their introduction to the leisure market for applications such aerial photography. \textcolor{red}{DO I REALLY NEED THIS PARAGRAPH? IT MISSES OUT ON THE POINT}
+
+Small-sized \textcolor{red}{VTOL} (Vertical Take-off and landing) drones ,UAVs (Unmanned Aerial Vehicles) and UASs (Unmanned Aerial Systems) currently face two major challenges which affect their applicability and practicality: Battery life and choice of landing surface. Battery life poses a considerable limitation in terms of flight time, inevitably setting a limit to the amount of data gathered during each flight operation, with flight times rarely exceeding 20-30 minutes. As in helicopters, these vehicles also require flat, stable and sufficiently wide surfaces for landing, and in many cases this can become an issue in applications such as rainforest canopy research or natural disaster zone reconnaissance operations.
+
+-Talk about what others have done to assess the issue of short battery life
 	
 A significant amount of attempts at solving these issues involve a bio-inspired solution known as perching: When flying beings such as birds or insects do not need to stay airborne, they are able to land in locations such as power lines, posts or branches where they can rest and perform other tasks in the meantime. \cite{PerchTypes} compiles a comprehensive array of perching techniques currently investigated, which include chemical adhesion, suction cups, synthetic gecko skin, claws, microspines and electroadhesion.  The Biomimetics \& Dexterous Manipulation Laboratory at Stanford University have an extensive research record on the use of microspines to successfully achieve perching in ceilings and vertical surfaces in microquadrotors \cite{SCAMP} and small fixed-wing UAVs \cite{microspines}. Harvard University's Robobee \cite{robobee} makes use of electrostatic adhesion to allow an insect-sized drone to perch on a variety of surfaces. However, this technology has only been currently proven to work on very small-sized systems and scalability to larger  machines might be compromised by large power requirements. Worth noting as well are the works of \cite{bird} on the development of an avian-inspired passive perching mechanism and \cite{insect} for its insect counterpart, which, although more lightweight, only offers limited landing location flexibility.
 
+
+-Comment on problems with their designs (high mass, very specific applications in terms of landing spot, extra battery needed, not being able to yaw, etc)
+
 The vast majority of the exposed projects share a common flaw: They depend to some extent on the available landing surface area, necessary for mechanisms such as microspines to be satisfactorily deployed, which could render them ineffective in situations where a sufficiently large landing spot is not available. This limitation is mitigated in \cite{bird} by using a bird-like claw mechanism, but at the added cost of a heavier assembly which could severely affect active flight time in small-sized UAVs. Owing to this, it would be desirable to develop a platform light enough to be carried by a small-sized drone without significantly affecting flight time and manoeuvrability and which allowed it to perch on locations such as edges or other complex geometries where deployment of claw-like mechanisms would be difficult.
+
+
+-Introduce the work by Hao Wang on one DOF quanser
 
 
 A recent study investigated the feasibility of a novel technique termed "monopod perching" on a 3 degree-of-freedom Quanser helicopter for a single (pitch) axis of rotation with cascaded PID attitude control \cite{Hao}. With this method the weight of the drone is held by a single lightweight rod (figure \ref{fig1}), allowing the drone to perch on a single point while its motors operate at minimal power for balancing. This form of active perching would obviate the need for a sufficiently smooth/rough landing surface, and the quality of perching would be unaffected by the surface area of the landing location. Furthermore, yawing about its support axis for reorientation and/or data gathering in different directions would be possible, becoming a useful feature in reconnaissance missions.
@@ -71,14 +70,22 @@ A recent study investigated the feasibility of a novel technique termed "monopod
 \end{figure}
 
 
-The aim of this paper is focused on the implementation of this technology on a Crazyflie 2.0 nano quadcopter, studying its feasibility and characterising its behaviour as a function of monopod length. The performance metrics will involve measurement of perching and hovering time, disturbance rejection and assessment of stability on various surfaces and geometries. The results obtained in this project will shed light on the capabilities and scalability of this approach, allow for the creation of PID tuning guidelines and aid identification of possible limitations.
+-Describe what this paper is concerned with achieving
+
+
+The aim of this paper is focused on the implementation of this technology on a Crazyflie 2.0 nano quadcopter, studying its feasibility and characterising its behaviour as a function of \textcolor{red}{monopod} length. The performance metrics will involve measurement of perching and hovering time, disturbance rejection and assessment of stability on various surfaces and geometries. The results obtained in this project will shed light on the capabilities and scalability of this approach, allow for the creation of PID tuning guidelines and aid identification of possible limitations.
+
+
 
 
 \section{Experimental set-up and testing}
 The Crazyflie 2.0 nano quadcopter was used as the test platform for this project. Its small size and high modularity made it an attractive choice, as well as its open-source code, which allows for extensive modifications to suit each application. A Crazyradio PA was used to communicate with the quadcopter, and development was performed in a Bitcraze virtual machine, built specifically for development of this quadcopter and freely available online. This drone has a flight time of only 7 minutes while hovering, which poses a serious limitation to its practicality in mission-based or research-based scenarios.
 	
 \subsection{Dynamic model of drone}
-A dynamic model of the drone was developed to be compared against experimental results and identifying sensible monopod lengths. A nano quadrotor can be depicted as a central mass joined via massless and infinitely stiff arms to its motors. The monopod is modelled as an infinitely stiff, massless rod of length $L$, pivoting on a single point without friction. The maximum angle $\theta$ of inclination sustained on any axis (pitch/roll) for a given monopod length and quadcopter geometry will be achieved when the quadcopter is oriented such that all motors move within the axis's plane of rotation. Therefore, this angle will be dependent on the maximum thrust achievable by any pair of adjacent motors. Symmetry of the vehicle allows for a simplified 2D depiction of the dynamic model (Figure \ref{fig2}).
+-Show my dynamic model of the drone + equations. Show also expected max roll/pitch angles? Describe here the stick lengths that will be used as well.
+
+
+A dynamic model of the drone was developed to be compared against experimental results, \textcolor{red}{finding approximate PID gains}, and identifying sensible monopod lengths. A nano quadrotor can be depicted as a central mass joined via massless and infinitely stiff arms to its motors. The monopod is modelled as an infinitely stiff, massless rod of length $L$, pivoting on a single point without friction. The maximum angle $\theta$ of inclination sustained on any axis (pitch/roll) for a given monopod length and quadcopter geometry will be achieved when the quadcopter is oriented such that all motors move within the axis's plane of rotation. Therefore, this angle will be dependent on the maximum thrust achievable by any pair of adjacent motors. Symmetry of the vehicle allows for a simplified 2D depiction of the dynamic model (Figure \ref{fig2}).
 
 \begin{figure}[h!]
 \centering
@@ -108,7 +115,7 @@ and rearranging, the maximum tilt angle $\theta_{max}$ can be found:
 \theta_{max} = sin^{-1}\Big(\frac{T_1l}{2mgL + MgL}\Big)
 \end{equation}
 
-The parameters $T_{1}, l, m$ and $M$ were experimentally determined, and were recorded in table \ref{table1}. Figure \ref{fig3} shows $\theta_{max}$ as a function of monopod length $L$.
+The parameters $T_{1}, l, m$ and $M$ were experimentally determined, and were recorded in \textcolor{red}{table \ref{table1}}. Figure \ref{fig3} shows $\theta_{max}$ as a function of monopod length $L$.
 
 
 \begin{table}[h!]
@@ -118,7 +125,7 @@ The parameters $T_{1}, l, m$ and $M$ were experimentally determined, and were re
 T$_{1}$ {[}N{]} & l {[}m{]} & M {[}kg{]} & m {[}kg{]} & g {[}ms$^{-2}${]} \\ \midrule
 0.05625         & 0.035     & 0.032      & 0.004      & 9.8               \\ \bottomrule
 \end{tabular}
-\caption{Experimentally determined dynamic parameters}
+\caption{Experimentally determined parameters}
 \label{table1}
 \end{table}
 
@@ -154,7 +161,16 @@ Where $K_p, K_i, K_d$ are constant, non-negative gains, $e(t)$ is the error and 
 
 The PID tuning approach will involve adjusting each axis separately. A typical approach CITE HERE involves first tuning the inner control loop for a zero angular rate reference until the quadcopter remains irrotational, but not necessarily upright. Finally, the outer loop will be tuned such that the quadcopter can be brought to the upright position, or to the correct yaw angle. This method proved ineffective for this application and its implications are further assessed in the discussion.
 
+\begin{itemize}
+\item Explain how cascaded PID is implemented in this drone(one PID for each axis). \textcolor{red}{what PID am I adjusting the parameters for? I need this info for the matlab model}. Explain that the idea is to get this PID controller to control the tilt of the drone, considering the tilt angles are small enough to linearise the problem.
+\item Talk about the flight stages and which one we are mostly interested in on this paper (perching) Maybe leave this for the end
+\end{itemize}
+
 \subsection{Experimental set-up}
+\begin{itemize}
+\item Models of monopod/perching considered. p.8
+\item p.13 test rig models considered/built and why they were used/modified/discarded.
+\end{itemize}
 A carbon fibre monopod was used to minimise weight impact while ensuring sufficient stiffness. A 3D-printed ABS plastic support was used to couple it to the quadcopter (Figure \ref{fig5}(a)). The tip of the monopod was sharpened with a rotary tool to ensure single-point perching (Figure \ref{fig5}(b)). Care was taken to place the monopod underneath the center of gravity (CoG) of the quadcopter to minimise any imbalances. Any imbalances were corrected by shifting the position of the battery.
 
 \begin{figure}[h!]
@@ -180,30 +196,9 @@ One of the most challenging aspects of this project involved determining suitabl
 
 As previously explained, a 1 DOF test rig was initially employed to adjust roll, pitch and yaw PIDs. The following procedure was performed for each axis: Tune rate PID until quadcopter stayed in position and then tune attitude PID to maintain a desired angle. The base thrust component was kept at zero value, since the weight of the drone is already held by the monopod and the base thrust does not contribute to stabilisation.
 
-This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters for a 8 cm monopod are compiled in table \ref{table2}. 
+This procedure resulted in K$_p$ and K$_i$ gains of the order of 10$^5$ for the rate PID, and very low gains for the attitude PID, as well as K$_d$ gains. The yaw PID, however, yielded much lower values. All parameters for a 8 cm monopod are compiled in \textcolor{red}{table \ref{table2}}. 
 
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
-\centering
-\begin{tabular}{@{}ccccccccc@{}}
-\toprule
-\multicolumn{9}{c}{Rate PID}                                                   \\ \midrule
-\multicolumn{3}{c}{Pitch} & \multicolumn{3}{c}{Roll} & \multicolumn{3}{c}{Yaw} \\ \midrule
-K$_p$   & K$_i$  & K$_d$  & K$_p$  & K$_i$  & K$_d$  & K$_p$  & K$_p$  & K$_p$ \\ \midrule
-3200    & 50     & 0.01   & 3200   & 50     & 0.01   & 2500   & 30     & 0     \\ \midrule
-\multicolumn{9}{c}{Attitude PID}                                               \\ \midrule
-\multicolumn{3}{c}{Pitch} & \multicolumn{3}{c}{Roll} & \multicolumn{3}{c}{Yaw} \\ \midrule
-K$_p$   & K$_i$  & K$_d$  & K$_p$  & K$_i$  & K$_d$  & K$_p$  & K$_p$  & K$_p$ \\ \midrule
-3.4     & 0      & 0.05   & 3.4    & 0      & 0.05   & 9      & 0.1    & 0  \\
-\bottomrule
-\end{tabular}
-\caption{PID parameters for a 8 cm monopod}
-\label{table2}
-\end{table}
-
-
-A strange behaviour was observed when the quadcopter was located on various surfaces to assess the efficacy and robustness of perching: On surfaces with significant damping, such as human skin, the quadcopter would remain consistently upright. On slippery surfaces, it would drift along the surface plane while remaining balanced. However, when the drone was located on surfaces with very low friction and where it was not possible to drift, it would instantly fall. This phenomenon was initially believed to be due to a slightly incorrect location of the CoG. However, this hypothesis was later disproved by performing balancing experiments on the 1 DOF test rig, and noting that the quadcopter fell with a different orientation each time. Figure \ref{fig7} (a) and (b) illustrate the behaviour under 1 DOF test on test rig and test on slippery surface, respectively. Figure \ref{fig8} shows test results on low friction surface with restricted movement on surface plane.
+A strange behaviour was observed when the quadcopter was located on various surfaces to assess the efficacy and robustness of perching: On surfaces with significant damping, such as human skin, the quadcopter would remain consistently upright. On slippery surfaces, it would drift along the surface plane while remaining balanced. However, when the drone was located on surfaces with very low friction and where it was not possible to drift, it would instantly fall \textcolor{red}{(Show picture of slot in aluminium plate?)}. This phenomenon was initially believed to be due to a slightly incorrect location of the CoG. However, this hypothesis was later disproved by performing balancing experiments on the 1 DOF test rig, and noting that the quadcopter fell with a different orientation each time. Figure \ref{fig7} (a) and (b) illustrate the behaviour under 1 DOF test on test rig and test on slippery surface, respectively. Figure \ref{fig8} shows test results on low friction surface with restricted movement on surface plane.
 
 
 \begin{figure}[h!]
@@ -236,6 +231,10 @@ After extensive trials, it was found that balancing the quadcopter on rate mode 
 
 A different approach was used and the attitude PID gains were given a value of 1 each to aid in balancing. This allowed for much lower PID parameters to be determined, with an order of 10$^3$ for roll and pitch, subsequently resulting battery consumption. Final PID gains for a 8 cm monopod are compiled in table \ref{table2}. 
 
+\begin{itemize}
+\item table with PID parameters here
+\end{itemize}
+
 While performing preliminary endurance tests to assess how long perching could be sustained for on a single charge, another strange phenomenon was observed: On some occasions, the drone would suddenly become highly unstable and fall, with no influence from external disturbances or presence of imbalances in the drone. Figure \ref{fig10}(a) illustrates this behaviour: preceding the instability, no external disturbances have affected the quadcopter, yet the pitch and roll angles grow unbounded. This was initially attributed to sudden connectivity losses between the on-board controller and the pc client. However, subsequent tests verified that this was not the cause of falling. Further balance and external disturbance verifications were performed, but once again were found not to be the causes.
 
 The cause of falling was finally attributed to the yaw controller: Yaw control was thought to be only necessary to avoid uncontrolled spinning, so a very rough adjustment, with oscillations of $\pm$20$^{\circ}$ was initially performed to focus attention on data gathering mainly related to pitch and roll. The unsettling was believed to happen when all pitch, roll and yaw were at their maximum amplitudes at the same time: The yaw controller would exert a fast turning moment, causing the quadcopter to quickly rotate about its monopod axis, changing roll and pitch angles a the same time. These fast changes would not allow the motors to respond fast enough to these changes due to their own inertia, eventually causing the drone to fall. The yaw PID was then readjusted, and an oscillation of $\pm$0.5$^{\circ}$ was found to be small enough to eliminate this phenomenon.
@@ -251,7 +250,7 @@ The cause of falling was finally attributed to the yaw controller: Yaw control w
 
 
 \subsection{Characterisation and analysis of perching quadcopter}
-Once the correct PID parameters were found for each monopod length, a study of the properties and behaviour for each length was performed. To aid in future scalability studies with larger or smaller quadcopters, the dimensionless variable $L/\ell$ (ratio of monopod to motor arm length. In this paper this will be referred to as the moment arm ratio) was used instead of monopod length.
+Once the correct PID parameters were found for each monopod length, a study of the properties and behaviour for each length was performed. To aid in future scalability studies with larger or smaller quadcopters, the dimensionless variable $L/l$ (ratio of monopod to motor arm length. In this paper this will be referred to as the \textcolor{red}{moment arm ratio}) was used instead of monopod length.
 
 One of the most important matters in perching involves measuring how much longer mission time can be prolonged: A series of tests were performed to measure perching time for each monopod length (Figure \ref{fig11}(a)). The hover time for the non-instrumented Crazyflie 2.0 quadcopter was measured at 6 minutes 45 seconds (405 seconds). The experimental results indicate perching times between 40 minutes (2400 seconds) and 63 minutes (3780 seconds), which constitutes a significant 500\% and 800\% increase in operation time with respect to simple hovering. The longest perching times (5 trial average) were obtained for moment arm ratios of 0.57 and 0.85, both yielding 63 minutes. By fitting a trendline around the measured datapoints, it can be inferred that the optimal moment arm ratio lies between these two values. If lower ratios were used, a steep decrease in performance was observed. This could be due to the high ground effect turbulence, causing a more frequent unsettling of the quadcopter due to recirculation of air underneath the rotors and counterbalancing the reduction in thrust and requiring a larger power draw. 
 
@@ -264,7 +263,7 @@ A much gentler loss is observed for larger ratios, which seem to approach an asy
   \label{fig11}
 \end{figure}
 
-As expected, instrumenting a quadcopter will negatively impact hover times. These were recorded for all monopod lengths (Figure \ref{fig11}(a)), and the clearest trend observed was that as monopod length increases, hovering time decreases. For the shortest moment arm ratio, a reduction in flight time of 30 seconds (7.4\%) can be observed, while for a moment arm ratio of 3.4 the loss increases to 68 seconds (16.7\%). A closer study of the results reveals two different slopes, a steeper one with a decrement of 19.9 minutes per unit $L/\ell$ for small moment arm ratios, and a gentler slope of 12.2 minutes per unit $L/\ell$. A plateau of constant hovering time can be observed between 1.14 and 1.71 moment arm ratios. This peculiarity could be related to the way in which the hover experiment was implemented: A 1 cm clearance to the ground was maintained from the tip of each monopod when hovering, with vertical and horizontal position of the drone being manually controlled via joystick. The thrust level required for each monopod was found by trial and error until the drone would consistently hover at the required height. As monopod length increased, so would the distance of the quadcopter's body to the ground, requiring small increases in thrust each time \cite {geffect}. The results indicate the possibility of the existence of two different ground flow regimes when hovering at low heights, which could be an important consideration when implementing an automatic landing mechanism for this technology. A clear limitation in these results is that the initial goal of the test, assessing the effect of monopod length on flight time, is not fully answered, since the impact that ground effect has on the required thrust might have hindered the effect of increased mass in the quadcopter.
+As expected, instrumenting a quadcopter will negatively impact hover times. These were recorded for all monopod lengths (Figure \ref{fig11}(a)), and the clearest trend observed was that as monopod length increases, hovering time decreases. For the shortest moment arm ratio, a reduction in flight time of 30 seconds (7.4\%) can be observed, while for a moment arm ratio of 3.4 the loss increases to 68 seconds (16.7\%). A closer study of the results reveals two different slopes, a steeper one with a decrement of 19.9 minutes per unit $L/l$ for small moment arm ratios, and a gentler slope of 12.2 minutes per unit $L/l$. A plateau of constant hovering time can be observed between 1.14 and 1.71 moment arm ratios. This peculiarity could be related to the way in which the hover experiment was implemented: A 1 cm clearance to the ground was maintained from the tip of each monopod when hovering, with vertical and horizontal position of the drone being manually controlled via joystick. The thrust level required for each monopod was found by trial and error until the drone would consistently hover at the required height. As monopod length increased, so would the distance of the quadcopter's body to the ground, requiring small increases in thrust each time \cite {geffect}. The results indicate the possibility of the existence of \textcolor{red}{two different ground flow regimes when hovering at low heights, which could be an important consideration when implementing an automatic landing mechanism for this technology}. A clear limitation in these results is that the initial goal of the test, assessing the effect of monopod length on flight time, is not fully answered, since the impact that ground effect has on the required thrust might have hindered the effect of increased mass in the quadcopter.
 
 Finally, perching time and hover time were added to find the moment arm ratio that would give the longest operation time, with 0.57 resulting the best ratio of all that were measured (Figure \ref{fig11}(b)).
 
@@ -300,8 +299,6 @@ Finally, trends were also explored in the magnitude of PID parameters for the ra
 
 Various hypotheses were formulated to justify the increase in K$_p$ values. The larger horizontal displacements for the same angle and higher moment of inertia due to a longer monopod would require higher motor thrusts and responsiveness, achieved via increased K$_p$ gains.
 
-For flying, the factory PID parameters allowed for sufficiently accurate flight control for the monopod drone, although on occasions roll and/or pitch trims would be necessary to counter mass imbalances.
-
 \begin{figure}[h!]
 \centering
  \includegraphics[scale=0.3]{Rate_PID.pdf}
@@ -315,23 +312,53 @@ For flying, the factory PID parameters allowed for sufficiently accurate flight 
   \caption{(a) Proportional gains of attitude controller as a function of $L/\ell$}
   \label{fig16}
 \end{figure}
+
+
+\begin{itemize}
+\item PID parameter tuning: Anything to do with getting the thing to perch. Talk about everything to do with parameter tuning:
+\begin{itemize}
+\item Problems with initial test rig and the PID parameters that it gave.(put a picture maybe). Show that motors just shot between 0 and max. Second test rig (p.55)
+\item Old vs new PID parameters (some comments on p.55 on use of k$_i$)
+\item problems with first tuning rate PID and then angle PID. Say that giving attitude pid a little bit of gain made tuning a lot easier. Also say that with first test rig, cf would stay up during 1 dof tests, but would fall when released into the actual test.
+\item Influence of yaw control and why it makes the drone so unstable when it is not correctly tuned. Show pictures of the graphs when it was not correct, and how this differs from the general conception that yaw does not affect roll or pitch. Say also that I had a suspicion with the initial test rig as well, because the roll and pitch balanced on 1 dof tests (p.29), but not when combined without yaw control. Comment that I thought it could be due to loss of info packets.
+\item Issues with balancing, monopod support conditions, surface used for tuning (bearings vs slot vs completely flat surface). \textcolor{red}{Talk about how it was very difficult to determine whether the drone was out of balance or that the PID parameters were wrong(kp too high or too low, p.69): Illustrate this with my pictures of changing the orientation of support/using a nominally identical support and the differences in behaviour. Talk about how this balancing issue was dealt with (mass shifting, p.70)}
+\item talk about tip of monopod: sharp vs blunt?
+
+\end{itemize} 
+\item Results from perching: p.62,63 have stuff on this as well 
+\begin{itemize}
+\item perch and hover times. Pareto chart. Better a long or short monopod?. Explain why short is more stable (closer to normal flying conditions, ie, just rotating about a mass). Compare perch times of old and new PID parameters?
+\item tilt angles (experimental vs model)(impulse,step and ramp. Assess effect of integrator over a sustained disturbance)
+\item Maximum yaw rate for each monopod length
+\item Having base thrust vs not having base thrust (try different thrust levels)
+\item Graph of thrust vs throttle percentage level
+\item Talk about PID parameters used during flight with and without perching rig?(They are the same. But maybe putting a bit more K$_I$ helps it from drifting around)
+\item Limitations of using such a tiny drone
+\item repeatability of tests/trials
+\item change in PID parameters with stick length
+\end{itemize}
+\end{itemize}
+Setting the thrust low enough such that drone doesn't fly away
+Attitude vs rate mode
+Explain how I first intended to tune the drone - DO THIS VERY BRIEFLY TO EXPLAIN MORE EXTENSIVELY ON THE DISCUSSION (following the usual procedure of tuning inside loop first, and outside loop later, each dof separately), and how that did not work (show results/pictures in the results section or here?: Results could be a plot of the different behaviours on different surfaces and 1 dof test rig results vs with no test rig) 
+
+
+PID loop tuning: Show effects of not having good yaw control (show images of "unexplained" falling), using the initial test rig, and what effect tuning with regular procedures had (tuning in rate mode only and then attitude vs tuning everything at the same time, tuning 1 DoF and the others, etc. Show how this gave largely wrong PID parameters only useful for a few surfaces with movement, and not a stationary point). Regular tuning, with 1 dof at a time was justified by the fact that thrust requests were independently added to each motor from each axis. According to this, no yaw control would be necessary to properly tune the drone, but this proved not to be correct.
+
+In my results, I get perching times of 60 min. Since the battery takes 35-40 min to fully charge, it means the drone could be perhaps charged by induction while it is perching, since the charging time is faster than the energy consumption time.
+
+Talk about stick length and sensitivity to unbalanced mass.
 \section{Conclusions and future work}
-The results obtained in this project show that it is possible to implement monopod perching on a real drone, and the very promising results suggest a realistic possibility of future implementation of this technology in commercial and research UAVs: Perching times were observed to last 500 to 800\% longer than the hovering time of an unloaded drone, while hovering times of a drone with perching equipment only involved a reduction of between 7.4 and 16.7\% compared to the unloaded drone.
+"If I had the knowledge I have now, how would I approach this problem?"
+"Future stuff to do"
+Good to add some sort of friction/damping mechanism to the end of the monopod such that it is easier to balance it, making it less sensitive to changes in CoG or disturbances.
+\begin{itemize}
 
-Yawing while perching, another facet of monopod perching, was shown to work for all the monopod lengths studied, showing a decrease in maximum yaw rate as monopod length was increased, with yaw rates of 60$^{\circ}s^{-1}$ for a 1 cm monopod and 4$^{\circ}s^{-1}$ for a 12 cm monopod.
+\item effect of yaw
+\item effect of test rig
+\item talk about inspiration from omnicube?
+\item   \end{itemize}
 
-The small tilt angles involved meant monopod perching could be implemented via a cascaded PID controller, reducing the task to only finding the appropriate PID gains for each monopod length. However, this proved very challenging for many reasons which have been explained, all of which connected to the very small mass of the drone: The minimal inertia of the Crazyflie 2.0 quadcopter  meant it was very sensitive to both damping at the perching point and very slight variations in positioning of its center of gravity during tuning. This in turn impaired the ability to troubleshoot and identify causes for the very low repeatability in behaviour of the quadcopter.
-
-Relating to the experiments performed with the setup used in this report, some further research and experimentation will provide a deeper understanding of the technology: Only responses to step disturbances were explored to find the maximum tilt angle for each monopod. However, a very useful dataset would involve the response to impulse disturbances, similar to a gust of wind or impact with a surface element.
-
-Some limited work was performed to implement automated landing using a VICON system with ROS parameter setting. An important step during landing is the smooth and effective transition between the landing controller and the perching controller, which could be challenging due to the impact at the moment of contact with the landing surface. As discussed in section \ref{Results and discussion}, a variation in behaviour was observed between moment arm ratios of 1.14 and 1.71. This could play an important role in landing/take-off implementation and might become an important consideration when troubleshooting.
-A high-level Python script was written to implement both landing and take-off, allowing for transition between flying, landing and perching regimes. However, further work is still needed for real-time PID gain setting.
-
-An interesting concept to be explored might be the inclusion of wireless charging while perching: The single-cell LiPo batteries that are used by the Crazyflie 2.0 drone take between 35 and 40 minutes to fully charge. Considering perching times can last up to 60 minutes, wirelessly charging the drone while perching via methods such as induction or solar power would improve mission times even further.
-
-Owing to the issues with repeatability due to the mass of the Crazyflie 2.0, it is suggested that the experiments performed in this report are repeated on a larger drone: The larger inertia would allow for easier accommodation of CoG displacements, as well as diminishing the effect of damping at the perching spot while tuning, perhaps permitting the use of a scaled-up version of the 1 DOF test rig initially created, which would greatly simplify the task of tuning the PID controllers. Using a larger drone will permit exploration of the scalability of this technology by comparing data as a function of moment arm ratios ($L/\ell$) with results in this report.
-
-A further suggestion regarding the repeatability of results and PID tuning consists of adding a damping element to the tip of the monopod: In the experiments in this study, the monopod tip was completely rigid, which caused the 1 DOF test rig to be unsuitable for its purpose. Adding this damping element would be somewhat equivalent to using a larger drone in the sense that the quadcopter would be less sensitive to slight dynamic changes, but would also entail the advantages of cheaper and easier development (the Crazyflie 2.0 would still be usable, and its open-source code is easy to modify and develop), and would provide a shock-absorbing element for landing. Re-using the Crazyflie 2.0 would permit the inheritance of the dataset obtained in this report for comparison and verification.
 
 \bibliographystyle{unsrt}
 \bibliography{references}
@@ -339,74 +366,6 @@ A further suggestion regarding the repeatability of results and PID tuning consi
 \pagebreak
 \begin{appendices}
 \section{Quick start guide on development of Crazyflie 2.0 quadcopter}
-\begin{itemize}
-\item Development of the Crazyflie 2.0 quadcopter is best done via an Ubuntu Virtual Machine specially designed by Bitcraze. A guide on how to download it and set it up is available in this link: https://www.bitcraze.io/getting-started-with-the-crazyflie-2-0/
-
-\item The VM (Virtual Machine) needs an extension pack to allow for USB compatibility. Download it here: https://www.virtualbox.org/wiki/Downloads
-
-\item A lot of useful information can be found on the Bitcraze wiki: https://wiki.bitcraze.io/ and Bitcraze forum.
-
-\item The Crazyflie can be flown out of the box using the Crazyflie Client in the Virtual Machine. This client also allows various parameters to be set in real-time and allows plotting of these parameters.
-
-\item The client (PC) side of the quadcopter is written in Python. A "crazyflie" class is used to connect to the crazyflie and send/receive data to/from it. The Crazyflie uses a library called cflib in which all these functionalities, incuding the crazyflie class, are implemented. You can find cflib in the VM on /home/bitcraze/Desktop/projects/crazyflie-lib-python/cflib. A set of simple examples are available under /home/bitcraze/Desktop/projects/crazyflie-lib-python/examples to learn how the Crazyflie code works. Install Pycharm on the Virtual Machine to aid development (note: you might have to install Java 8 in the virtual machine).
-
-\item The firmware in the Crazyflie is written in C, and the Bitcraze wiki offers a simple tutorial on how to modify the code and flash it to the microcontroller in the Crazyflie. The firmware code can be found in /home/bitcraze/projects/crazyflie-firmware/ in the virtual machine.
-
-\item You might want to install "pip" for Python 3.4 on the Virtual Machine to easily download packages for this Python version, as most of the code is based on Python 3.4
-
-\item A GitHub repository can be found with the code developed during this project and results. You can find it on https://github.com/f-rower/EF08. Three folders can be found: Crazyflie-firmware-Manual\textunderscore Thrust, 000\textunderscore Python\textunderscore Flying\textunderscore Code  and Results :
-
-\begin{itemize}
-\item Crazyflie-firmware-Manual\textunderscore Thrust contains a modification made to the /home/bitcraze /projects/crazyflie-firmware/src/modules/src/controller\textunderscore pid.c file in the Crazyflie firmware. This modification allows a base thrust level to be set as a parameter in the crazyflie client without the need of a gamepad, which is very useful when tuning the PID parameters, as it still allows the yaw, pitch and roll PID controllers to function. To implement this change, just substitute this file with the controller\textunderscore pid.c file inside Crazyflie-firmware-Manual\textunderscore Thrust and flash the new firmware to the crazyflie. As of 03/09/2017, this has already been done, so there would be no need to need to implement this step.
-
-For perching experiments, the ManualThrust parameter was set to 1 (one) via the cfclient. The maximum value possible is roughly 60000. A base thrust level of 1 is so small that the motors will only run if yaw, pitch or roll angles are different from their reference values, which is desirable for minimising battery consumption while perching. The ManualThrust parameter is set to zero by default, and can be modified in the "parameter" tab in the CFclient (figure \ref{cfclient-param}) when a Crazyflie is connected.
-
-\begin{figure}[h!]
-\centering
-\includegraphics[scale=0.3]{cfclient-param.JPG}
-  \caption{Parameter tab in CFClient}
-  \label{cfclient-param}
-\end{figure}
-
-If the gamepad thrust is used, the ManualThrust parameter will be overridden. Once the joystick thrust is back to zero, ManualThrust will again set the thrust level to whatever level it was set to.
-
-\item The 000\textunderscore Python\textunderscore Flying\textunderscore Code contains the high-level Python script with which a landing, perching and flying framework was to be developed. This is written in Python 3.4, and is dependent on the cflib library and the gamepad.py module. This module is used to capture a gamepad and read inputs from it. You need to install the pygame module for Python 3.4 in your Virtual Machine.
-
-Under 000\textunderscore Python\textunderscore Flying\textunderscore Code two folders can be found:  
-\textunderscore base\textunderscore Flying\textunderscore Code ,which is not necessary, and Flying\textunderscore Code. Inside Flying\textunderscore Code, the Flying\textunderscore EF08.py script contains the main framework for switching between flying, perching and landing, as well as writing data from a specified parameter to a file (called "fileread.txt") in real-time, which is implemented by using the logging framework from cflib (see "basiclog.py" example in /home/bitcraze/Desktop/projects/crazyflie-lib-python/examples). A second script, Plotter.py, allows for plotting of data from fileread.txt in real-time if it is run alongside Flying\textunderscore EF08.py.
-
-\item The Results folder contains this report, as well as the previous work by \cite{Hao}, and results obtained in this project. CAD files for the monopod support are also provided.
-
-Expt\textunderscore Data.xlsx contains perching and hovering time data, maximum yaw rate and PID gains for each of the monopod lengths studied. TiltAngle.xlsx contains results from maximum tilt angle and response to step inputs. Damping.ods contains the data from the 1DoF test rig damping assessment.
-\end{itemize}
-
-\item A number of elements were used  during this study, most of which has been left in a Farnell cardboard box in the flying arena. This box contains:
-\end{itemize}
-
-\begin{table}[h!]
-\centering
-\begin{tabular}{@{}cc@{}}
-\toprule
-Item                                     & Quantity \\ \midrule
-Crazyflie 2.0 quadcopter                 & 2        \\
-Single-cell LiPo batteries, 3.7V, 240mAh & 3        \\
-Crazyradio PA USB dongle                 & 1        \\
-Logitech gamepad                         & 1        \\
-1 DoF test rig                           & 1        \\
-Improved test rig                        & 1        \\
-Tilt angle test rig                      & 1        \\
-LiPo battery USB charger                 & 4        \\
-Ball bearings                            & 6        \\
-1 m Carbon fibre tubes                   & 5        \\
-Crazyflie 2.0 spare motors               & 6        \\
-Set of spare propellers                  & ?        \\
-Set of spare motor mounts                & ?        \\
-Carbon fibre monopods, various lengths   & 1 each   \\
-Monopod supports                         & ?        \\ \bottomrule
-\end{tabular}
-\caption{Inventory}
-\label{my-label}
-\end{table}
 
 \end{appendices}
 \end{document}
